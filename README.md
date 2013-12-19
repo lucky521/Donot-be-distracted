@@ -16,5 +16,8 @@ images - image resources
 ## Page Action Icon
 The page action icon will display only when chrome://extensions/
 
+## Instruction
+Refer to "readme.txt" for the instructions in Chinese.
+
 ## Copyright
 The App is written by Lucky in 2013.12, based on Hawstein/WebsitePostponer on github and just for learning. You're not allowd to take it for commercial use.
