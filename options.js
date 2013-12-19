@@ -40,11 +40,11 @@ function restore_defaulturl_option() {
 
 
 function save_time_option() {
-  	var select1 = document.getElementById("starttime");
-  	var starttimevalue = select1.options[select1.options.selectedIndex].value;
+	var select1 = document.getElementById("starttime");
+	var starttimevalue = select1.options[select1.options.selectedIndex].value;
 
 	var select2 = document.getElementById("endtime");
-  	var endtimevalue = select2.options[select2.options.selectedIndex].value;
+	var endtimevalue = select2.options[select2.options.selectedIndex].value;
 
 	if(parseInt(starttimevalue) <= parseInt(endtimevalue)) {
 		localStorage["starttime"] = starttimevalue;
@@ -58,49 +58,51 @@ function save_time_option() {
 
 
 function restore_defaulttime_option() {
- 	localStorage["starttime"]  = localStorage["default_starttime"];
- 	localStorage["endtime"] = localStorage["default_endtime"];
+	localStorage["starttime"]  = localStorage["default_starttime"];
+	localStorage["endtime"] = localStorage["default_endtime"];
 
 	repaint_options_page();
 }
 
 
-// XXX:Rebuild the whole list
+// XXX:An algorithm to rebuild the whole list written by myself, I love it!!!
+// Attention I should keep the list continuous when I delete urls randomly, so...
 function delete_oneurl_option() {
 	var s = document.getElementById("currenturllist");
-	var countnum =  parseInt(localStorage["count"]);
 	var left, right;
 	left = 0;
 	right = s.length - 1;
-	while(left < right){
-		while(left < right && !s.options[left].selected)
-			left++;
-		while(left < right && s.options[right].selected)
-			right--;
-		if(left < right)
-		{
-			localStorage["url" + left] = localStorage["url" + right];
-			localStorage["url" + right] = "";
-			left++;
-			right--;
-			countnum--;
-		}
-	}
-	if(left == s.length - 1 && s.options[left].selected) {
-		localStorage["url" + left] = "";
-		countnum--;
-	}
-	localStorage["count"] = countnum;
+	if(left == right)
+		localStorage["count"] = 0;
+	else {
+		while(left < right){
+			while(left < right && s.options[right].selected)
+				right--;
+			while(left < right && !s.options[left].selected)
+				left++;
 
+			if(left < right)
+			{
+				localStorage["url" + left] = localStorage["url" + right];
+				localStorage["url" + right] = "";
+				left++;
+				right--;
+			}
+		}
+		if(right == left && s.options[right].selected)
+			localStorage["count"] = right;
+		else
+			localStorage["count"] = right+1;
+	}
 	repaint_options_page();
 }
 
 
 function add_oneurl_option() {	
-	 var url = document.getElementById("blockUrl").value;  //get the url
-	 url = format_url(url);
- 	 if(url) {
-    		var existed = checkExisted(url);
+	var url = document.getElementById("blockUrl").value;  //get the url
+	url = format_url(url);
+	if(url) {
+		var existed = checkExisted(url);
 		if(!existed){	// add url when it is not existed in the localStorage
 			var num = localStorage["count"];
 			var urli = "url" + num;
@@ -110,20 +112,20 @@ function add_oneurl_option() {
 	}
 	else
 		alert("Sorry, you have to enter an block URL.");
-	
+
 	repaint_options_page();
 }
 
 
 function clear_allurl_option() {
-  var num = localStorage["count"];
-  for(var i=0; i<parseInt(num); ++i){
-    	var urli = "url" + i;
-	localStorage[urli] = "";
-  }
-  localStorage["count"] = 0;
+	var num = localStorage["count"];
+	for(var i=0; i<parseInt(num); ++i){
+		var urli = "url" + i;
+		localStorage[urli] = "";
+	}
+	localStorage["count"] = 0;
 
-  repaint_options_page();
+	repaint_options_page();
 }
 
 
@@ -147,22 +149,22 @@ function repaint_options_page() {
 		tmp.value = "url" + i;
 		document.getElementById("currenturllist").add(tmp);
 	}
-	
+
 }
 
 
 // handle the event
 document.addEventListener('DOMContentLoaded', function () {
-  document.querySelector('#btn_save_redirectUrl').addEventListener('click', save_redirecturl_option);  //通过id找到相应元素,执行响应的函数
-  document.querySelector('#btn_todefault_url').addEventListener('click', restore_defaulturl_option);
+	document.querySelector('#btn_save_redirectUrl').addEventListener('click', save_redirecturl_option);  //通过id找到相应元素,执行响应的函数
+	document.querySelector('#btn_todefault_url').addEventListener('click', restore_defaulturl_option);
 
-  document.querySelector('#btn_save_blocktime').addEventListener('click', save_time_option);
-  document.querySelector('#btn_todefault_time').addEventListener('click', restore_defaulttime_option);
+	document.querySelector('#btn_save_blocktime').addEventListener('click', save_time_option);
+	document.querySelector('#btn_todefault_time').addEventListener('click', restore_defaulttime_option);
 
-  document.querySelector('#btn_save_newurl').addEventListener('click', add_oneurl_option);
+	document.querySelector('#btn_save_newurl').addEventListener('click', add_oneurl_option);
 
-  document.querySelector('#btn_save_removeurl').addEventListener('click', delete_oneurl_option);
-  document.querySelector('#btn_clearall').addEventListener('click', clear_allurl_option);
+	document.querySelector('#btn_save_removeurl').addEventListener('click', delete_oneurl_option);
+	document.querySelector('#btn_clearall').addEventListener('click', clear_allurl_option);
 
-  window.addEventListener('load', repaint_options_page);
+	window.addEventListener('load', repaint_options_page);
 });
