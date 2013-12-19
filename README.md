@@ -8,8 +8,8 @@ manifest.json - manifest version 2
 background.js - background script
 
 options.html - option page 
-options.js
-style.css
+options.js  
+style.css  
 
 images - image resources
 
