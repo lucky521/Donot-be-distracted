@@ -1,0 +1,21 @@
+﻿{
+  "name": "Donot be distracted",
+  "version": "13.12.18",
+  "description": "A useful to Help you stay focus on your work. - Lucky 2013",
+  "background": { "scripts": ["background.js"] },
+  "page_action" :
+  {
+    "default_icon" : "images/icon-19.png",
+    "default_title" : "Settings"
+  },
+  "permissions" : [
+    "tabs",
+    "notifications"
+  ],
+  "icons" : {
+    "48" : "images/icon-48.png",
+    "128" : "images/icon-128.png"
+  },
+  "options_page": "options.html",
+  "manifest_version": 2
+}
