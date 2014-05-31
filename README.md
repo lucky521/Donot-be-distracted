@@ -17,7 +17,7 @@ images - image resources
 The page action icon will display only when chrome://extensions/
 
 ## Instruction
-Refer to [readme_CH.md](https://github.com/lucky521/Donot-be-distracted/edit/master/readme_CH.md) for the instructions in Chinese.
+Refer to [readme_CH.md](https://github.com/lucky521/Donot-be-distracted/blob/master/readme_CH.md) for the instructions in Chinese.
 
 ## Copyright
 The App is written by Lucky in 2013.12, based on Hawstein/WebsitePostponer on github and just for learning. You're not allowd to take it for commercial use.
